@@ -39,14 +39,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowVercelFrontend",
-        policy =>
-        {
-            policy.WithOrigins("https://basic-task-manager-ui-bj7w.vercel.app")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins(
+            "http://localhost:3000", 
+            "http://localhost:5173",
+            "https://basic-task-manager-ui-bj7w.vercel.app")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
 });
+
 
 
 var app = builder.Build();
@@ -65,5 +69,6 @@ app.MapControllers();
 
 
 app.Run();
+
 
 
