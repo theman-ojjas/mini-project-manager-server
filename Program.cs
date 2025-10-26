@@ -58,11 +58,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowReactApp");
+app.UseCors("AllowVercelFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
 
 app.Run();
+
 
