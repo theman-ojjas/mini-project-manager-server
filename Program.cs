@@ -48,15 +48,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-var app = builder.Build();
-
-app.UseCors("AllowVercelFrontend");
-
-app.UseAuthorization();
-app.MapControllers();
-
-app.Run();
-
 
 var app = builder.Build();
 
@@ -74,3 +65,4 @@ app.MapControllers();
 
 
 app.Run();
+
