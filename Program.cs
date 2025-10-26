@@ -44,7 +44,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
             "http://localhost:3000", 
             "http://localhost:5173",
-            "https://basic-task-manager-ui-bj7w.vercel.app")
+            "https://mini-project-manager-ui.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -52,6 +52,12 @@ builder.Services.AddCors(options =>
 });
 
 
+// Authentication, DB, Swagger...
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
@@ -73,6 +79,7 @@ app.MapControllers();
 
 
 app.Run();
+
 
 
 
