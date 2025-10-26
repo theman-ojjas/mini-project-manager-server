@@ -36,16 +36,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // CORS
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
-    {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
+    options.AddPolicy("AllowVercelFrontend",
+        policy =>
+        {
+            policy.WithOrigins("https://basic-task-manager-ui-bj7w.vercel.app")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
 });
+
+var app = builder.Build();
+
+app.UseCors("AllowVercelFrontend");
+
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();
+
 
 var app = builder.Build();
 
@@ -60,5 +71,6 @@ app.UseCors("AllowReactApp");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 
 app.Run();
